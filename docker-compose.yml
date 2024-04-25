@@ -1,21 +1,21 @@
+version: '3.8'
+
 services:
-  postgres:
-    image: postgres
+
+  mongo:
+    image: mongo
+    restart: always
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=toor
-      - POSTGRES_DB=main_application
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
     ports:
-      - "5432:5432"
-    volumes:
-      - "./postgres/main_application:/var/lib/postgresql/data"
-      
-  pgadmin:
-    image: dpage/pgadmin4
+      - 8081:8081
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=root
-    ports:
-      - "8080:80"
-    depends_on:
-      - postgres
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017
+      ME_CONFIG_BASICAUTH: false
