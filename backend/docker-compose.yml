@@ -1,12 +1,33 @@
-version: '3.9'
+version: '3.8'
 
 services:
-  mongo:
-    image: mongo
+  postgresql-staging:
+    image: postgres:16
     restart: always
-    ports:
-      - 27017:27017
     env_file:
       - .env
+    ports:
+      - "5432:5432"
     volumes:
-      - ./docker/mongodb:/data/db
+      - ./docker/postgresql-staging:/var/lib/postgresql/data
+    networks:
+      - suricaras
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    user: root
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8888:80"
+    volumes:
+      - ./docker/pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgresql-staging
+    networks:
+      - suricaras
+
+networks: 
+  suricaras:
+    driver: bridge
