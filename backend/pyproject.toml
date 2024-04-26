@@ -17,6 +17,7 @@ pydantic-settings = "^2.2.1"
 ruff = "^0.4.2"
 black = "^24.4.1"
 mypy = "^1.10.0"
+pre-commit = "^3.7.0"
 
 [tool.black]
 line-length = 79
@@ -43,6 +44,7 @@ disallow_untyped_decorators = false
 ignore_missing_imports = true
 implicit_reexport = true
 plugins = "pydantic.mypy"
+exclude = [".mypy_cache/"]
 
 [tool.pydantic-mypy]
 init_forbid_extra = true
